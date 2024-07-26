@@ -4,6 +4,7 @@ import GuessInput from './components/GuessInput';
 import ResultsDisplay from './components/ResultsDisplay';
 import CongratsPopup from './components/CongratsPopup';
 import GameOverPopup from './components/GameOverPopup';
+import HintPopup from './components/HintPopup';
 import './App.css';
 
 function App() {
@@ -11,9 +12,12 @@ function App() {
   const [gameState, setGameState] = useState('playing');
   const [showCongratsPopup, setShowCongratsPopup] = useState(false);
   const [showGameOverPopup, setShowGameOverPopup] = useState(false);
+  const [showHintPopup, setShowHintPopup] = useState(false);
 
   const defaultImage = '/default-image.jpg';
   const correctAnswer = 'cat';
+  const dailyHint = "Category: Animal";
+
 
   const handleGuess = (guess) => {
     const newGuesses = [...guesses, guess];
@@ -32,9 +36,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>PixelPuzzle</h1>
-        {/* Future icons can go here */}
-        {/* <button className="help-icon">?</button> */}
-        {/* <button className="hint-icon">💡</button> */}
+        <button className="hint-button" onClick={() => setShowHintPopup(true)}>Hint</button>
       </header>
       <main className="App-main">
         <div className="game-container">
@@ -60,6 +62,12 @@ function App() {
           correctAnswer={correctAnswer}
           imageSrc={defaultImage}
           onClose={() => setShowGameOverPopup(false)}
+        />
+      )}
+      {showHintPopup && (
+        <HintPopup
+          hint={dailyHint}
+          onClose={() => setShowHintPopup(false)}
         />
       )}
     </div>
