@@ -4,7 +4,8 @@ const PixelImage = ({ imageSrc, guessCount }) => {
   const canvasRef = useRef(null);
   const targetWidth = 600;
   const targetHeight = 600;
-  const maxPixelSize = 60;
+  const maxPixelSize = 50; // Reduced from 60
+  const minPixelSize = 2; // Added minimum pixel size
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -15,16 +16,19 @@ const PixelImage = ({ imageSrc, guessCount }) => {
       canvas.width = targetWidth;
       canvas.height = targetHeight;
       
-      // Draw the image first
       ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
       
-      // Then apply pixelation
-      const pixelSize = Math.max(maxPixelSize - guessCount * 10, 1);
+      // New pixelSize calculation for a more gradual progression
+      const pixelSize = Math.max(
+        minPixelSize,
+        Math.round(maxPixelSize * Math.pow(0.75, guessCount))
+      );
+      
       pixelate(ctx, targetWidth, targetHeight, pixelSize);
     };
     
     img.src = imageSrc;
-  }, [imageSrc, guessCount]); // Make sure guessCount is in the dependency array
+  }, [imageSrc, guessCount]);
 
   const pixelate = (ctx, width, height, pixelSize) => {
     const imageData = ctx.getImageData(0, 0, width, height);
@@ -32,12 +36,10 @@ const PixelImage = ({ imageSrc, guessCount }) => {
 
     for (let y = 0; y < height; y += pixelSize) {
       for (let x = 0; x < width; x += pixelSize) {
-        // Get the color of the first pixel in the square
         const red = imageData.data[((y * width) + x) * 4];
         const green = imageData.data[((y * width) + x) * 4 + 1];
         const blue = imageData.data[((y * width) + x) * 4 + 2];
 
-        // Draw a pixelSize x pixelSize square with that color
         ctx.fillStyle = `rgb(${red},${green},${blue})`;
         ctx.fillRect(x, y, pixelSize, pixelSize);
       }
