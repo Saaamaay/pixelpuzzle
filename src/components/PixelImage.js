@@ -21,7 +21,7 @@ const PixelImage = ({ imageSrc, guessCount }) => {
       // New pixelSize calculation for a more gradual progression
       const pixelSize = Math.max(
         minPixelSize,
-        Math.round(maxPixelSize * Math.pow(0.75, guessCount))
+        Math.round(maxPixelSize * Math.pow(0.78, guessCount))
       );
       
       pixelate(ctx, targetWidth, targetHeight, pixelSize);
