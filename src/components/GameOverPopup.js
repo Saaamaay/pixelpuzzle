@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createSquareImageDataURL } from '../ImageUtils';
 
-const CongratsPopup = ({ guessCount, imageSrc, onClose }) => {
+const GameOverPopup = ({ guessCount, correctAnswer, imageSrc, onClose }) => {
   const [squareImageSrc, setSquareImageSrc] = useState(null);
   const [shareMessage, setShareMessage] = useState('');
 
@@ -12,7 +12,7 @@ const CongratsPopup = ({ guessCount, imageSrc, onClose }) => {
   }, [imageSrc]);
 
   const handleShare = () => {
-    const shareText = `PixelPuzzle ${guessCount}/6\n${generateEmoji(guessCount)}`;
+    const shareText = `PixelPuzzle X/6\n${generateEmoji()}`;
     
     navigator.clipboard.writeText(shareText).then(() => {
       setShareMessage('Result copied to clipboard!');
@@ -24,18 +24,16 @@ const CongratsPopup = ({ guessCount, imageSrc, onClose }) => {
     });
   };
 
-  const generateEmoji = (count) => {
-    const filledSquares = '🟩'.repeat(count);
-    const emptySquares = '⬜'.repeat(6 - count);
-    return filledSquares + emptySquares;
+  const generateEmoji = () => {
+    return '🟥'.repeat(6); // Use red squares to indicate failure
   };
 
   return (
-    <div className="congrats-popup">
+    <div className="game-over-popup">
       <div className="popup-content">
         <button className="close-button" onClick={onClose}>×</button>
-        <h2>Congratulations!</h2>
-        <p>You solved the puzzle in {guessCount} guesses.</p>
+        <h2>Game Over</h2>
+        <p>The correct answer was: {correctAnswer}</p>
         <div className="image-wrapper">
           {squareImageSrc ? (
             <img src={squareImageSrc} alt="Puzzle solution" className="revealed-image" />
@@ -50,4 +48,4 @@ const CongratsPopup = ({ guessCount, imageSrc, onClose }) => {
   );
 };
 
-export default CongratsPopup;
+export default GameOverPopup;
