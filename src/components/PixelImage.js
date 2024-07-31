@@ -4,7 +4,7 @@ const PixelImage = ({ imageSrc, guessCount }) => {
   const canvasRef = useRef(null);
   const targetWidth = 600;
   const targetHeight = 600;
-  const maxPixelSize = 50; // Reduced from 60
+  const maxPixelSize = 48; // Reduced from 60
   const minPixelSize = 2; // Added minimum pixel size
 
   useEffect(() => {

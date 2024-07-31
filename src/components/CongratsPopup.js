@@ -5,6 +5,9 @@ const CongratsPopup = ({ guessCount, imageSrc, onClose }) => {
   const [squareImageSrc, setSquareImageSrc] = useState(null);
   const [shareMessage, setShareMessage] = useState('');
 
+  const WEBSITE_URL = "https://yourpixelpuzzlewebsite.com";
+
+
   useEffect(() => {
     createSquareImageDataURL(imageSrc)
       .then((result) => setSquareImageSrc(result))
@@ -12,7 +15,7 @@ const CongratsPopup = ({ guessCount, imageSrc, onClose }) => {
   }, [imageSrc]);
 
   const handleShare = () => {
-    const shareText = `PixelPuzzle ${guessCount}/6\n${generateEmoji(guessCount)}`;
+    const shareText = `PixelPuzzle ${guessCount}/6\n${generateEmoji(guessCount)}\n${WEBSITE_URL}`;
     
     navigator.clipboard.writeText(shareText).then(() => {
       setShareMessage('Result copied to clipboard!');

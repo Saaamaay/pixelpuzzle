@@ -15,9 +15,8 @@ function App() {
   const [showHintPopup, setShowHintPopup] = useState(false);
 
   const defaultImage = '/default-image.jpg';
-  const correctAnswer = 'cat';
-  const dailyHint = "Category: Animal";
-
+  const correctAnswer = 'flute';
+  const dailyHint = "Category: Music";
 
   const handleGuess = (guess) => {
     const newGuesses = [...guesses, guess];
